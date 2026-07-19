@@ -32,3 +32,12 @@ export async function login(req: Request, res: Response, next: NextFunction) {
     next(err);
   }
 }
+
+export async function me(req: Request, res: Response, next: NextFunction) {
+  try {
+    const user = await authService.getById(req.userId);
+    res.json({ user });
+  } catch (err) {
+    next(err);
+  }
+}

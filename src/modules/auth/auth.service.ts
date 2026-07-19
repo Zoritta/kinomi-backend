@@ -38,6 +38,15 @@ export async function signup(input: SignupInput) {
   };
 }
 
+export async function getById(userId: string) {
+  const user = await prisma.user.findUnique({ where: { id: userId } });
+  if (!user) {
+    throw new HttpError(401, 'User no longer exists');
+  }
+
+  return { id: user.id, email: user.email };
+}
+
 export async function login(input: LoginInput) {
   const user = await prisma.user.findUnique({ where: { email: input.email } });
   if (!user) {
