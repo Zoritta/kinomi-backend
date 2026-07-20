@@ -61,3 +61,7 @@ Work in progress — built incrementally as part of interview prep. Currently im
 - [ ] Profile CRUD + OpenAPI pipeline
 - [ ] Browse/filter, matching, messaging endpoints
 - [ ] Tests, CI, deployment
+
+
+my notes, will be deleted later:
+The project follows a layered architecture. Routes define endpoints, middleware handles cross-cutting concerns like validation and authentication, controllers handle HTTP-specific logic, services contain the business logic, and Prisma is the data access layer.
