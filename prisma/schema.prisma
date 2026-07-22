@@ -19,4 +19,80 @@ model User {
   email        String   @unique
   passwordHash String
   createdAt    DateTime @default(now())
+
+  profile Profile?
+}
+
+model Profile {
+  id     String @id @default(uuid())
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  displayName String
+  bio         String?
+
+  lookingFor        LookingFor[]
+  smokingPreference SmokingPreference?
+  petPreference     PetPreference?
+  cleanliness       Cleanliness?
+  scheduleType      ScheduleType?
+  socialEnergy      SocialEnergy?
+  housingStatus     HousingStatus?
+  housingPreference HousingPreference?
+
+  languages String[]
+  interests String[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum LookingFor {
+  CO_LIVING
+  SHARED_MEALS
+  WATCHING_TV
+  ACTIVITY_PARTNER
+  CONVERSATION
+}
+
+enum SmokingPreference {
+  SMOKER
+  NON_SMOKER
+  NO_PREFERENCE
+}
+
+enum PetPreference {
+  HAS_PETS
+  LIKES_PETS
+  NO_PETS
+  ALLERGIC
+}
+
+enum Cleanliness {
+  VERY_TIDY
+  TIDY
+  RELAXED
+}
+
+enum ScheduleType {
+  EARLY_BIRD
+  NIGHT_OWL
+  FLEXIBLE
+}
+
+enum SocialEnergy {
+  INTROVERT
+  AMBIVERT
+  EXTROVERT
+}
+
+enum HousingStatus {
+  HAS_PLACE
+  LOOKING_TOGETHER
+}
+
+enum HousingPreference {
+  RENT
+  OWN
+  NO_PREFERENCE
 }
