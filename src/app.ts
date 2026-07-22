@@ -2,6 +2,7 @@
 import express from 'express';
 import prisma from './lib/prisma';
 import authRoutes from './modules/auth/auth.routes';
+import profileRoutes from './modules/profiles/profiles.routes';
 import { errorHandler } from './middleware/error-handler';
 
 const app = express();
@@ -18,6 +19,7 @@ app.get('/health/db', async (_req, res) => {
 });
 
 app.use('/api/auth', authRoutes);
+app.use('/api/profiles', profileRoutes);
 
 app.use(errorHandler);
 
