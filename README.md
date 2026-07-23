@@ -9,8 +9,9 @@ This repo is the supporting backend for [`kinomi-frontend`](../kinomi-frontend),
 - **Express + TypeScript** (`strict` mode) — REST API
 - **PostgreSQL + Prisma** — database and ORM
 - **Docker Compose** — local Postgres instance
-- `zod` + `@asteasolutions/zod-to-openapi` (planned) — request validation and OpenAPI generation from a single source of truth
-- `jsonwebtoken` + `bcrypt` (planned) — auth
+- `zod` + `@asteasolutions/zod-to-openapi` — request validation and OpenAPI generation from a single source of truth
+- `swagger-ui-express` — interactive API docs at `/api/docs`, generated from the same schemas that validate requests
+- `jsonwebtoken` + `bcrypt` — JWT auth (short-lived access token + `httpOnly` refresh cookie)
 
 ## Getting started
 
@@ -33,6 +34,8 @@ The server listens on `http://localhost:4000` by default (`PORT` env var to over
 
 - `GET /health` — confirms the server is up
 - `GET /health/db` — confirms the server can reach Postgres
+- `GET /api/docs` — interactive API documentation (Swagger UI)
+- `GET /api/openapi.json` — the raw OpenAPI contract, consumed by `kinomi-frontend`'s codegen script
 
 ## Environment variables
 
@@ -42,6 +45,8 @@ Copy `.env` and adjust as needed. Currently used:
 |---|---|
 | `DATABASE_URL` | Postgres connection string used by Prisma (both the CLI and the running app) |
 | `PORT` | Port the Express server listens on (default `4000`) |
+| `JWT_SECRET` | Signs/verifies short-lived access tokens |
+| `JWT_REFRESH_SECRET` | Signs/verifies the longer-lived refresh token (stored in an `httpOnly` cookie) |
 
 ## Scripts
 
@@ -57,8 +62,8 @@ Work in progress — built incrementally as part of interview prep. Currently im
 
 - [x] Express + TypeScript scaffold
 - [x] Prisma + PostgreSQL, first migration (`User` model)
-- [ ] Auth (signup/login/JWT)
-- [ ] Profile CRUD + OpenAPI pipeline
+- [x] Auth (signup/login/JWT, `requireAuth` middleware)
+- [x] Profile CRUD + OpenAPI pipeline (`/api/docs`)
 - [ ] Browse/filter, matching, messaging endpoints
 - [ ] Tests, CI, deployment
 
